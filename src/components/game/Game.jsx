@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import Icon from '../icon/Icon'
+import GameInfo from '../gameInfo/GameInfo'
 import styles from '../game/Game.module.css'
 import GameOption from '../gameOption/GameOption'
 
@@ -37,6 +37,12 @@ function Game () {
     })
   }
 
+  const handleReset = () => {
+    setGameState(Array(9).fill(0))
+    setWinner(0)
+    setCurrentPlayer(-1)
+  }
+
   //IMPORTANTE!!! useEffect tem dois parametros, uma função e um array
   useEffect(() => {
     setCurrentPlayer(currentPlayer * -1)
@@ -56,15 +62,11 @@ function Game () {
         ) 
       }
      </div>
-     <div className= {styles.gameInfo}>
-      <h4>Próximo a jogar</h4>
-      {
-        currentPlayer === 1 && <Icon iconName ='circle.svg' />
-      }
-      {
-        currentPlayer === -1 && <Icon iconName ='x.svg' />
-      }
-     </div>
+     <GameInfo
+     currentPlayer={currentPlayer}
+     winner={winner}
+     onReset={handleReset}
+     />
     </div>
   )
 }
