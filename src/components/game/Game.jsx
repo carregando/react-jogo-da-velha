@@ -12,7 +12,7 @@ const winnerTable = [
   [1,4,7],
   [2,5,8],
   [0,4,8],
-  [2,4,6]
+  [2,4,6],
 ]
 
 
@@ -20,6 +20,7 @@ function Game () {
   const [gameState, setGameState] = useState(Array(9).fill(0))
   const [currentPlayer, setCurrentPlayer] = useState(-1)
   const [winner, setWinner] = useState(0)
+  const [winnerLine, setWinnerLine] = useState([])
 
   const handleClick = (valueOfPos) => {
     if (gameState[valueOfPos] === 0 && winner === 0) {
@@ -33,14 +34,21 @@ function Game () {
     winnerTable.forEach((line) =>{
      const values = line.map ((values) => gameState[values])
      const soma = values.reduce((acc, value) => acc + value, 0 )
-     if (soma === 3 || soma === -3) setWinner(soma / 3)
+     if (soma === 3 || soma === -3) {
+       setWinner(soma / 3)
+       setWinnerLine(line)
+     } 
     })
   }
+
+  const verifyWinnerLine = (pos) => 
+  winnerLine.find((value) => value === pos) !== undefined
 
   const handleReset = () => {
     setGameState(Array(9).fill(0))
     setWinner(0)
     setCurrentPlayer(-1)
+    setWinnerLine([])
   }
 
   //IMPORTANTE!!! useEffect tem dois parametros, uma função e um array
@@ -58,17 +66,19 @@ function Game () {
           key={`game-option-pos-${pos}`} 
           status={value}
           onClick={() => handleClick(pos)}
+          isWinner={verifyWinnerLine(pos)}
         />
         ) 
       }
      </div>
+
      <GameInfo
      currentPlayer={currentPlayer}
      winner={winner}
      onReset={handleReset}
      />
     </div>
+
   )
 }
-
 export default Game 
