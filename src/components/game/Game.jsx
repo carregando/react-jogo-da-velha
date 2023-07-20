@@ -23,6 +23,8 @@ function Game () {
   const [winner, setWinner] = useState(0)
   const [winnerLine, setWinnerLine] = useState([])
   const [draw, setDraw] = useState(false)
+  const [scoreboardX, setScoreboardX] = useState(0)
+  const [scoreboardO, setScoreboardO] = useState(0)
 
   const handleClick = (valueOfPos) => {
     if (gameState[valueOfPos] === 0 && winner === 0) {
@@ -68,7 +70,16 @@ function Game () {
 
   useEffect (() =>{
     if (winner !== 0) setDraw(false)
+    handleScoreboard()
   }, [winner])
+
+  const handleScoreboard = () => {
+    if (winner === -1) setScoreboardX(scoreboardX + 1)
+    if (winner === 1) setScoreboardO(scoreboardO + 1)
+    console.log('O:',scoreboardO)
+    console.log('X:',scoreboardX)
+  }
+
 
   return (
   <>
@@ -94,7 +105,7 @@ function Game () {
      isDraw={draw}
      />
     </div>
-    <Score/>
+    <Score winsX={scoreboardX} winsO={scoreboardO}/>
   </>
   )
 }
