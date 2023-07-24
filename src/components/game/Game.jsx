@@ -76,8 +76,6 @@ function Game () {
   const handleScoreboard = () => {
     if (winner === -1) setScoreboardX(scoreboardX + 1)
     if (winner === 1) setScoreboardO(scoreboardO + 1)
-    console.log('O:',scoreboardO)
-    console.log('X:',scoreboardX)
   }
 
 
